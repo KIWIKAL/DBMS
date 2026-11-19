@@ -1,0 +1,19 @@
+CREATE TABLE employee (eno NUMBER PRIMARY KEY, ename VARCHAR2(20), sal NUMBER, dept VARCHAR2(10));
+INSERT INTO employee VALUES (1,'Ravi',30000,'IT');
+INSERT INTO employee VALUES (2,'Meena',45000,'HR');
+
+SELECT * FROM employee WHERE sal > 25000 AND dept = 'IT';
+SELECT * FROM employee WHERE sal <= 30000 OR dept = 'HR';
+SELECT ename FROM employee WHERE sal > (SELECT AVG(sal) FROM employee);
+DROP TABLE employee;
+
+-- OR: Trigger
+CREATE OR REPLACE TRIGGER trg_sal_check
+BEFORE INSERT OR UPDATE ON employee
+FOR EACH ROW
+BEGIN
+  IF :NEW.sal < 0 THEN
+    RAISE_APPLICATION_ERROR(-20001,'Salary cannot be negative');
+  END IF;
+END;
+/
