@@ -1,0 +1,17 @@
+CREATE TABLE customer (cid NUMBER PRIMARY KEY, cname VARCHAR2(20));
+CREATE TABLE orders (
+  oid NUMBER PRIMARY KEY,
+  cid NUMBER,
+  amount NUMBER,
+  CONSTRAINT fk_cust FOREIGN KEY (cid) REFERENCES customer(cid)
+);
+
+-- OR: Trigger
+CREATE TABLE order_log (oid NUMBER, deleted_on DATE);
+CREATE OR REPLACE TRIGGER trg_order_del
+AFTER DELETE ON orders
+FOR EACH ROW
+BEGIN
+  INSERT INTO order_log VALUES (:OLD.oid, SYSDATE);
+END;
+/
