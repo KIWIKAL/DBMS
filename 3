@@ -1,0 +1,19 @@
+CREATE TABLE sales (sid NUMBER PRIMARY KEY, product VARCHAR2(15), region VARCHAR2(10), amount NUMBER);
+INSERT INTO sales VALUES (1,'Pen','East',500);
+INSERT INTO sales VALUES (2,'Book','West',1500);
+INSERT INTO sales VALUES (3,'Bag','East',2500);
+
+SELECT region, COUNT(*), SUM(amount), AVG(amount)
+FROM sales GROUP BY region HAVING SUM(amount) > 2000;
+
+SELECT * FROM sales WHERE amount = (SELECT MAX(amount) FROM sales);
+
+-- OR: Procedure
+CREATE OR REPLACE PROCEDURE total_by_region(p_region VARCHAR2) IS
+  t NUMBER;
+BEGIN
+  SELECT SUM(amount) INTO t FROM sales WHERE region = p_region;
+  DBMS_OUTPUT.PUT_LINE('Total: ' || t);
+END;
+/
+-- EXEC total_by_region('East');
