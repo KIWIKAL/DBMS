@@ -1,0 +1,25 @@
+CREATE TABLE team_a (id NUMBER, pname VARCHAR2(20));
+CREATE TABLE team_b (id NUMBER, pname VARCHAR2(20));
+INSERT INTO team_a VALUES (1,'Amit');
+INSERT INTO team_a VALUES (2,'Sneha');
+INSERT INTO team_b VALUES (2,'Sneha');
+INSERT INTO team_b VALUES (3,'Rahul');
+
+SELECT * FROM team_a UNION     SELECT * FROM team_b;
+SELECT * FROM team_a UNION ALL SELECT * FROM team_b;
+SELECT * FROM team_a INTERSECT SELECT * FROM team_b;
+SELECT * FROM team_a MINUS     SELECT * FROM team_b;
+
+ALTER TABLE team_a ADD age NUMBER;
+ALTER TABLE team_a MODIFY pname VARCHAR2(40);
+ALTER TABLE team_a RENAME COLUMN pname TO player_name;
+ALTER TABLE team_a DROP COLUMN age;
+
+-- OR: Function
+CREATE OR REPLACE FUNCTION factorial(n NUMBER) RETURN NUMBER IS
+  f NUMBER := 1;
+BEGIN
+  FOR i IN 1..n LOOP f := f * i; END LOOP;
+  RETURN f;
+END;
+/
