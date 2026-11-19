@@ -1,0 +1,17 @@
+CREATE TABLE product (pid NUMBER PRIMARY KEY, pname VARCHAR2(20), price NUMBER, qty NUMBER);
+INSERT INTO product VALUES (1,'Mouse',500,20);
+INSERT INTO product VALUES (2,'Monitor',7000,5);
+
+CREATE VIEW costly_products AS
+  SELECT pid, pname, price FROM product WHERE price > 600;
+SELECT * FROM costly_products ORDER BY price DESC;
+DROP VIEW costly_products;
+
+-- OR: Function
+CREATE OR REPLACE FUNCTION stock_value(p_id NUMBER) RETURN NUMBER IS
+  v NUMBER;
+BEGIN
+  SELECT price*qty INTO v FROM product WHERE pid = p_id;
+  RETURN v;
+END;
+/
