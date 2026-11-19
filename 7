@@ -1,0 +1,16 @@
+CREATE TABLE book (bid NUMBER PRIMARY KEY, title VARCHAR2(30), author VARCHAR2(20));
+ALTER TABLE book ADD price NUMBER;
+ALTER TABLE book MODIFY title VARCHAR2(50);
+
+INSERT INTO book VALUES (1,'DBMS Concepts','Korth',450);
+INSERT INTO book VALUES (2,'Java Basics','Schildt',600);
+UPDATE book SET price = 500 WHERE bid = 1;
+DELETE FROM book WHERE bid = 2;
+DROP TABLE book;
+
+-- OR: Function
+CREATE OR REPLACE FUNCTION discount_price(p NUMBER, d NUMBER) RETURN NUMBER IS
+BEGIN
+  RETURN p - (p*d/100);
+END;
+/
