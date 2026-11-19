@@ -1,0 +1,17 @@
+CREATE TABLE account (
+  accno   NUMBER PRIMARY KEY,
+  holder  VARCHAR2(30) NOT NULL,
+  email   VARCHAR2(30) UNIQUE,
+  balance NUMBER CHECK (balance >= 500),
+  branch  VARCHAR2(15) DEFAULT 'Loni'
+);
+INSERT INTO account (accno, holder, email, balance) VALUES (1001,'Kunal','k@mail.com',1000);
+
+-- OR: Trigger
+CREATE OR REPLACE TRIGGER trg_bal_update
+AFTER UPDATE OF balance ON account
+FOR EACH ROW
+BEGIN
+  DBMS_OUTPUT.PUT_LINE('Old: ' || :OLD.balance || ' New: ' || :NEW.balance);
+END;
+/
